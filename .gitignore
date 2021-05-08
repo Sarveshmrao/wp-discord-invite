@@ -1,0 +1,5 @@
+node_modules/
+package-lock.json
+.svn/
+includes/
+wp-discord-invite.php
