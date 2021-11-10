@@ -3,9 +3,9 @@ Contributors: sarveshmrao
 Donate link: https://sarveshmrao.in
 Tags: Discord, invite, link, vanity, URL, Discord Invite Links, Vanity URL
 Requires at least: 5.2
-Tested up to: 5.6
+Tested up to: 5.8
 Requires PHP: 7.2
-Stable tag: 2.3.1
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,9 @@ You can ask for help in WordPress Plugin Support Page.
 
 == Changelog ==
 
+= 2.4.0 =
+New features: You can now create webhook using Discord OAuth. Bug fixes. Help Page removed.
+
 = 2.3.1 =
 New feautres: You can now customize the `/discord` URL to what ever you want, help menu added next to each fields for easy access. 
 
@@ -71,10 +74,14 @@ Bug fixes.
 
 = 1.1.0 =
 New features: Click counter and simple stats, webhook.
+
 = 1.0.0 =
 Initial stable version.
 
 == Upgrade Notice ==
+
+= 2.4.0 =
+Upgrade to get new features like Discord OAuth login for webhook and other security updates. 
 
 = 2.3.1 =
 Upgrade to get new features like customising the `/discord` URL etc. 
