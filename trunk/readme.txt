@@ -3,9 +3,9 @@ Contributors: sarveshmrao
 Donate link: https://sarveshmrao.in
 Tags: Discord, invite, link, vanity, URL, Discord Invite Links, Vanity URL
 Requires at least: 5.2
-Tested up to: 6.3
+Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 2.5.2
+Stable tag: 2.5.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,9 @@ You can ask for help in WordPress Plugin Support Page.
 
 == Changelog ==
 
+= 2.5.3 =
+WP Version Upgrade
+
 = 2.5.2 =
 Bug fixes
 
@@ -87,7 +90,10 @@ Initial stable version.
 == Upgrade Notice ==
 
 = 2.5.2 =
-Important bugs fixed
+Minor Bug fixed. Update recommended.
+
+= 2.5.2 =
+Important bugs fixed.
 
 = 2.5.1 =
 Must upgrade for Discord issues to get fixed.
