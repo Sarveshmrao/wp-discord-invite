@@ -13,6 +13,11 @@ if (!defined("ABSPATH")) {
   exit();
 }
 
+/**
+ * Register plugin settings and options
+ * 
+ * @return void
+ */
 function smr_discord_settings()
 {
   //register our settings
@@ -40,20 +45,67 @@ function smr_discord_settings()
   add_option("smr_discord_uri", "discord");
 }
 
+/**
+ * Sanitize text field input
+ * 
+ * @param string $option Input value
+ * @return string Sanitized value
+ */
 function sanitize_smr_discord_text($option){
+    // Strip all HTML tags for security - CVE-2025-47638 mitigation
+    $option = wp_strip_all_tags($option);
     $option = sanitize_text_field($option);
     return $option;
 }
 
+/**
+ * Sanitize URL input
+ * 
+ * @param string $option Input URL
+ * @return string Sanitized URL
+ */
 function sanitize_smr_discord_url($option){
     $option = sanitize_url($option);
     return $option;
 }
 
+/**
+ * Sanitize hex color input
+ * 
+ * @param string $option Input color
+ * @return string Sanitized hex color
+ */
 function sanitize_smr_discord_color($option){
+    // Additional validation for CVE-2025-47638
     $option = sanitize_hex_color($option);
+    // If invalid hex color, return default Discord blue
+    if (empty($option)) {
+        return '#5865f2';
+    }
     return $option;
 }
 
+function sanitize_smr_discord_click_count($option){
+    $option = absint($option);
+    return $option;
+}
+
+function sanitize_smr_discord_click_count_last_reset($option){
+    if ($option === 'Never') {
+        return $option;
+    }
+    return sanitize_text_field($option);
+}
+
+function sanitize_smr_discord_link_last_click($option){
+    if ($option === 'Never') {
+        return $option;
+    }
+    return sanitize_text_field($option);
+}
+
+function sanitize_smr_discord_webhook_enable($option){
+    return ($option == '1') ? '1' : '0';
+}
 
 ?>

@@ -14,6 +14,13 @@ if (!defined("ABSPATH")) {
 }
 
 add_action("admin_enqueue_scripts", "smr_discord_enqueue_color_picker");
+
+/**
+ * Enqueue WordPress color picker for admin pages
+ * 
+ * @param string $hook_suffix The current admin page hook suffix
+ * @return void
+ */
 function smr_discord_enqueue_color_picker($hook_suffix)
 {
   // first check that $hook_suffix is appropriate for your admin page

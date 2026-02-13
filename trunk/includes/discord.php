@@ -14,19 +14,34 @@ if (!defined("ABSPATH")) {
 }
 
 if (get_option("smr_discord_invite_link") == "") {
-  die("Invite link not set");
+  wp_die(__('Invite link not set', 'wp-discord-invite'));
 }
-$optionName = "smr_discord_click_count";
-$counter = get_option($optionName);
-$counter = $counter + 1;
 
-if (get_option($optionName) !== false) {
-  // The option already exists, so we just update it.
-  update_option($optionName, $counter);
-}
+// Update click counter atomically using WordPress database
+global $wpdb;
+$option_name = 'smr_discord_click_count';
+$wpdb->query(
+  $wpdb->prepare(
+    "UPDATE {$wpdb->options} 
+     SET option_value = option_value + 1 
+     WHERE option_name = %s",
+    $option_name
+  )
+);
 
 update_option("smr_discord_link_last_click", current_time("Y-m-d h:i:sa"));
 
+/**
+ * Send webhook notification to Discord
+ * 
+ * @param string $invite The invite URL
+ * @param string $invite_link Discord invite link
+ * @param int $clicks Number of clicks
+ * @param string $color Embed color
+ * @param string $webhook Webhook URL
+ * @param string $file Icon file URL
+ * @return void
+ */
 function discordmsg($invite, $invite_link, $clicks, $color, $webhook, $file)
 {
   $msg = json_decode(
@@ -48,11 +63,8 @@ function discordmsg($invite, $invite_link, $clicks, $color, $webhook, $file)
     ]);
 
     if (is_wp_error($response)) {
-      $errorResponse = $response->get_error_message();
-    } else {
-      //echo 'Response:<pre>';
-      //print_r( $response );
-      //echo '</pre>';
+      $error_message = $response->get_error_message();
+      error_log('WP Discord Invite: Webhook failed - ' . $error_message);
     }
   }
 }
@@ -66,34 +78,42 @@ if (get_option("smr_discord_webhook_enable") == 1) {
     plugin_dir_url(__FILE__) . "assets/icon-128x128.png"
   );
 }
-?>
 
+// Build Discord redirect URL
+$discord_invite_link = get_option('smr_discord_invite_link');
+$redirect_url = 'https://discord.com/invite/' . $discord_invite_link;
+
+// Output HTML with OpenGraph meta tags for rich embeds on Discord/social media
+// This MUST be HTML output - wp_redirect() would prevent crawlers from seeing these tags
+?>
 <!DOCTYPE html>
 <html>
 <head>
-<meta property="og:type" content="website"/>
-<meta property="og:site_name" content="<?php echo get_option(
-  "smr_discord_author"
-); ?>"/>
-<meta property="og:title"  content="<?php echo get_option(
-  "smr_discord_title"
-); ?>"/>
-<meta property="og:description" content="<?php echo get_option(
-  "smr_discord_description"
-); ?>"/>
-<meta property="og:image" content="<?php echo get_option(
-  "smr_discord_image_url"
-); ?>"/>
-<meta name="theme-color" content="<?php echo get_option(
-  "smr_discord_embed_color"
-); ?>"/>
-<meta property="og:url" content="<?php echo get_option(
-  "smr_discord_invite_link"
-); ?>"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><?php echo esc_html(get_option("smr_discord_title", "Discord Invite")); ?></title>
 
+<!-- OpenGraph meta tags for rich embeds -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="<?php echo esc_attr(get_option("smr_discord_author")); ?>"/>
+<meta property="og:title" content="<?php echo esc_attr(get_option("smr_discord_title")); ?>"/>
+<meta property="og:description" content="<?php echo esc_attr(get_option("smr_discord_description")); ?>"/>
+<meta property="og:image" content="<?php echo esc_url(get_option("smr_discord_image_url")); ?>"/>
+<meta name="theme-color" content="<?php echo esc_attr(get_option("smr_discord_embed_color")); ?>"/>
+<meta property="og:url" content="<?php echo esc_url(get_option("siteurl") . '/' . get_option("smr_discord_uri")); ?>"/>
+
+<!-- Meta refresh as fallback redirect (works without JavaScript) -->
+<meta http-equiv="refresh" content="0; URL=<?php echo esc_url($redirect_url); ?>" />
+
+<!-- Faster JavaScript redirect for users with JS enabled -->
+<script type="text/javascript">
+  window.location.href = "<?php echo esc_js($redirect_url); ?>";
+</script>
 </head>
 <body>
-<meta http-equiv="refresh" content="0; URL=<?php echo "https://discord.com/invite/" .
-  get_option("smr_discord_invite_link"); ?>" />
+<noscript>
+  <p><?php _e('Redirecting to Discord...', 'wp-discord-invite'); ?></p>
+  <p><a href="<?php echo esc_url($redirect_url); ?>"><?php _e('Click here if you are not redirected automatically', 'wp-discord-invite'); ?></a></p>
+</noscript>
 </body>
 </html>

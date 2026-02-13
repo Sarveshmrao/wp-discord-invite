@@ -12,143 +12,293 @@
 if (!defined("ABSPATH")) {
   exit();
 }
+
+/**
+ * Display the main settings page
+ * 
+ * @return void
+ */
 function smr_discord_settings_page()
 {
+  // Enqueue admin styles
+  wp_enqueue_style(
+    'wp-discord-admin-styles',
+    plugin_dir_url(__FILE__) . './../assets/admin-styles.css',
+    array(),
+    ' 2.6.0'
+  );
+  wp_enqueue_style(
+    'wp-discord-embed-styles',
+    plugin_dir_url(__FILE__) . './../assets/styles.css',
+    array(),
+    '2.6.0'
+  );
+  
+  // Enqueue WordPress media uploader
+  wp_enqueue_media();
   ?>
-<div class="wrap">
-<img src="<?php echo plugin_dir_url(__FILE__) .
-  "./../assets/icon-128x128.png"; ?>"></img>
-<h2>WP Discord Invite</h2>
+<div class="wrap wp-discord-wrap">
+  <!-- Header -->
+  <div class="wp-discord-header">
+    <img src="<?php echo esc_url(plugin_dir_url(__FILE__) . './../assets/icon-128x128.png'); ?>" alt="<?php esc_attr_e('WP Discord Invite', 'wp-discord-invite'); ?>">
+    <div class="wp-discord-header-content">
+      <h1><?php _e('WP Discord Invite Settings', 'wp-discord-invite'); ?></h1>
+      <p><?php _e('Configure your Discord server invite link and embed appearance', 'wp-discord-invite'); ?></p>
+    </div>
+  </div>
 
-<form method="post" action="options.php">
-    <?php settings_fields("smr-discord-settings-group"); ?>
+  <form method="post" action="options.php">
+    <?php settings_fields('smr-discord-settings-group'); ?>
     <script type="text/javascript">var $j = jQuery.noConflict();</script>
-    <table class="form-table">
-        <tr valign="top">
-        <th scope="row">Invite Link </th>
-        <td><p>https://discord.gg/<input type="text" name="smr_discord_invite_link" value="<?php echo get_option(
-          "smr_discord_invite_link",
-          "abCxYz"
-        ); ?>" /><span class="dashicons dashicons-editor-help" onclick="$j('#wp_discord_invite-link-desc').toggleClass('hidden');"></span>
-<p class="description hidden" id="wp_discord_invite-link-desc">A permenant invite link to your server. <br /><a href="https://docs.sarveshmrao.in/en/wp-discord-invite?mtm_campaign=WP%20Discord%20Invite&mtm_kwd=settings-page">More Info in Docs</a></p></td>
-        </tr>
-         
-        <tr valign="top">
-        <th scope="row">Redirect URL</th>
-        <td><p><?php echo get_option("siteurl")?>/<input type="text" name="smr_discord_uri" value="<?php echo get_option(
-          "smr_discord_uri",
-        ); ?>" /><span class="dashicons dashicons-editor-help" onclick="$j('#wp_discord_redirect-url-desc').toggleClass('hidden');"></span>
-<p class="description hidden" id="wp_discord_redirect-url-desc">The suffix after your site URL like: <b>/discord</b> or <b>/community</b> or <b>/support</b> <br /> Don't include the forward slash ('/') in the setting. <a href="https://docs.sarveshmrao.in/en/wp-discord-invite?mtm_campaign=WP%20Discord%20Invite&mtm_kwd=settings-page">More Info in Docs</a></p></td>
-        </tr>
 
+    <!-- Discord Configuration Card -->
+    <div class="wp-discord-card">
+      <div class="wp-discord-card-header">
+        <h2><span class="dashicons dashicons-admin-links"></span><?php _e('Discord Configuration', 'wp-discord-invite'); ?></h2>
+      </div>
+      <div class="wp-discord-card-body">
+        
+        <!-- Invite Link -->
+        <div class="wp-discord-field">
+          <label class="wp-discord-field-label">
+            <?php _e('Discord Invite Link', 'wp-discord-invite'); ?> <span class="required">*</span>
+            <a href="#" class="wp-discord-help-toggle" onclick="$j('#help-invite-link').toggleClass('hidden'); return false;">
+              <span class="dashicons dashicons-editor-help"></span>
+            </a>
+          </label>
+          <div class="wp-discord-field-input">
+            <span class="input-prefix">https://discord.gg/</span><input type="text" name="smr_discord_invite_link" value="<?php echo esc_attr(get_option('smr_discord_invite_link', 'abCxYz')); ?>" placeholder="abCxYz" required>
+          </div>
+          <div id="help-invite-link" class="wp-discord-help-content hidden">
+            <p><?php _e('Enter your permanent Discord invite code (the part after discord.gg/). You can create one in your Discord server settings.', 'wp-discord-invite'); ?></p>
+            <p><a href="https://docs.sarveshmrao.in/en/wp-discord-invite?mtm_campaign=WP%20Discord%20Invite&mtm_kwd=settings-page" target="_blank"><?php _e('Learn how to create a permanent invite →', 'wp-discord-invite'); ?></a></p>
+          </div>
+        </div>
 
-        <tr valign="top">
-        <th scope="row">Title </th>
-        <td><input type="text" name="smr_discord_title" value="<?php echo get_option(
-          "smr_discord_title",
-          "My Awesome Discord Server"
-        ); ?>" /><span class="dashicons dashicons-editor-help" onclick="$j('#wp_discord_title-desc').toggleClass('hidden');"></span>
-<p class="description hidden" id="wp_discord_title-desc">Title will be displayed above description and below author. <br /><a href="https://docs.sarveshmrao.in/en/wp-discord-invite?mtm_campaign=WP%20Discord%20Invite&mtm_kwd=settings-page">More Info in Docs</a></p></td>
-        </tr>
+        <!-- Vanity URL -->
+        <div class="wp-discord-field">
+          <label class="wp-discord-field-label">
+            <?php _e('Vanity URL Path', 'wp-discord-invite'); ?> <span class="required">*</span>
+            <a href="#" class="wp-discord-help-toggle" onclick="$j('#help-vanity-url').toggleClass('hidden'); return false;">
+              <span class="dashicons dashicons-editor-help"></span>
+            </a>
+          </label>
+          <div class="wp-discord-field-input">
+            <span class="input-prefix"><?php echo esc_html(get_option('siteurl')); ?>/</span><input type="text" name="smr_discord_uri" value="<?php echo esc_attr(get_option('smr_discord_uri')); ?>" placeholder="discord" required>
+          </div>
+          <div id="help-vanity-url" class="wp-discord-help-content hidden">
+            <p><?php _e('Choose a short, memorable path for your Discord invite (e.g., "discord", "community", or "support"). Don\'t include the forward slash.', 'wp-discord-invite'); ?></p>
+            <p><strong><?php _e('Your invite URL:', 'wp-discord-invite'); ?></strong> <code><?php echo esc_html(get_option('siteurl') . '/' . get_option('smr_discord_uri')); ?></code></p>
+          </div>
+        </div>
 
-        <tr valign="top">
-        <th scope="row">Description </th>
-        <td><input type="text" name="smr_discord_description" value="<?php echo get_option(
-          "smr_discord_description",
-          "My server is awesome coz of these"
-        ); ?>" /><span class="dashicons dashicons-editor-help" onclick="$j('#wp_discord_description-desc').toggleClass('hidden');"></span>
-<p class="description hidden" id="wp_discord_description-desc">Description will be displayed below title. <br /><a href="https://docs.sarveshmrao.in/en/wp-discord-invite?mtm_campaign=WP%20Discord%20Invite&mtm_kwd=settings-page">More Info in Docs</a></p></td>
-        </tr>
+      </div>
+    </div>
 
-        <tr valign="top">
-        <th scope="row">Author </th>
-        <td><input type="text" name="smr_discord_author" value="<?php echo get_option(
-          "smr_discord_author",
-          "You have been invited to a server!"
-        ); ?>" /><span class="dashicons dashicons-editor-help" onclick="$j('#wp_discord_author-desc').toggleClass('hidden');"></span>
-<p class="description hidden" id="wp_discord_author-desc">Author will be displayed above the title. <br /><a href="https://docs.sarveshmrao.in/en/wp-discord-invite?mtm_campaign=WP%20Discord%20Invite&mtm_kwd=settings-page">More Info in Docs</a></p></td>
-        </tr>
+    <!-- Embed Appearance Card -->
+    <div class="wp-discord-card">
+      <div class="wp-discord-card-header">
+        <h2><span class="dashicons dashicons-admin-appearance"></span><?php _e('Embed Appearance', 'wp-discord-invite'); ?></h2>
+      </div>
+      <div class="wp-discord-card-body">
+        <p class="description"><?php _e('Customize how your invite link appears when shared on Discord, Twitter, Facebook, etc.', 'wp-discord-invite'); ?></p>
 
-        <tr valign="top">
-        <th scope="row">Image URL </th>
-        <td><input type="text" id="smr_discord_image_url" name="smr_discord_image_url" value="<?php echo get_option(
-          "smr_discord_image_url",
-          "https://i.imgur.com/LzO5Aw5.png"
-        ); ?>" /><span class="dashicons dashicons-editor-help" onclick="$j('#wp_discord_img-desc').toggleClass('hidden');"></span>
-<p class="description hidden" id="wp_discord_img-desc">It's the URL of the image to be displayed at the right end of the embed. <br /><a href="https://docs.sarveshmrao.in/en/wp-discord-invite?mtm_campaign=WP%20Discord%20Invite&mtm_kwd=settings-page">More Info in Docs</a></p></td>
-        </tr>
+        <!-- Author -->
+        <div class="wp-discord-field">
+          <label class="wp-discord-field-label">
+            <?php _e('Author / Invitation Text', 'wp-discord-invite'); ?>
+            <a href="#" class="wp-discord-help-toggle" onclick="$j('#help-author').toggleClass('hidden'); return false;">
+              <span class="dashicons dashicons-editor-help"></span>
+            </a>
+          </label>
+          <div class="wp-discord-field-input">
+            <input type="text" name="smr_discord_author" value="<?php echo esc_attr(get_option('smr_discord_author', 'You have been invited to a server!')); ?>" placeholder="<?php esc_attr_e('You have been invited to a server!', 'wp-discord-invite'); ?>">
+          </div>
+          <div id="help-author" class="wp-discord-help-content hidden">
+            <p><?php _e('This text appears at the top of the embed card as the author/invitation message.', 'wp-discord-invite'); ?></p>
+          </div>
+        </div>
 
-        <tr valign="top">
-        <th scope="row">Embed color </th>
-        <td><input type="text" name="smr_discord_embed_color" value="<?php echo get_option(
-          "smr_discord_embed_color",
-          "#f4f4f4"
-        ); ?>" class="smr-discord-embed-color-picker" /><span class="dashicons dashicons-editor-help" onclick="$j('#wp_discord_color-desc').toggleClass('hidden');"></span>
-<p class="description hidden" id="wp_discord_color-desc">Hex code of the color in the left side of the embed. <br /><a href="https://docs.sarveshmrao.in/en/wp-discord-invite?mtm_campaign=WP%20Discord%20Invite&mtm_kwd=settings-page">More Info in Docs</a></p></td>
-        </tr>
+        <!-- Title -->
+        <div class="wp-discord-field">
+          <label class="wp-discord-field-label">
+            <?php _e('Server Name / Title', 'wp-discord-invite'); ?>
+            <a href="#" class="wp-discord-help-toggle" onclick="$j('#help-title').toggleClass('hidden'); return false;">
+              <span class="dashicons dashicons-editor-help"></span>
+            </a>
+          </label>
+          <div class="wp-discord-field-input">
+            <input type="text" name="smr_discord_title" value="<?php echo esc_attr(get_option('smr_discord_title', 'My Awesome Discord Server')); ?>" placeholder="<?php esc_attr_e('My Awesome Discord Server', 'wp-discord-invite'); ?>">
+          </div>
+          <div id="help-title" class="wp-discord-help-content hidden">
+            <p><?php _e('The main title/name of your Discord server that appears in the embed card.', 'wp-discord-invite'); ?></p>
+          </div>
+        </div>
 
-	<p>You can visit <a href="<?php echo get_option(
-   "siteurl"
- ).'/'.get_option("smr_discord_uri")?>"><?php echo get_option(
-  "siteurl"
-).'/'.get_option("smr_discord_uri")?></a>. Don't use '/' at the end if you want to display the author.</p>
-	<p>Please note that Discord Caches the URL for approx. 2 hours so changes won't get reflected immediately.</p>
-	</table>
+        <!-- Description -->
+        <div class="wp-discord-field">
+          <label class="wp-discord-field-label">
+            <?php _e('Server Description', 'wp-discord-invite'); ?>
+            <a href="#" class="wp-discord-help-toggle" onclick="$j('#help-description').toggleClass('hidden'); return false;">
+              <span class="dashicons dashicons-editor-help"></span>
+            </a>
+          </label>
+          <div class="wp-discord-field-input">
+            <input type="text" name="smr_discord_description" value="<?php echo esc_attr(get_option('smr_discord_description', 'My server is awesome coz of these')); ?>" placeholder="<?php esc_attr_e('Join our community!', 'wp-discord-invite'); ?>">
+          </div>
+          <div id="help-description" class="wp-discord-help-content hidden">
+            <p><?php _e('A short description of your Discord server that appears below the title.', 'wp-discord-invite'); ?></p>
+          </div>
+        </div>
 
+        <!-- Image URL -->
+        <div class="wp-discord-field">
+          <label class="wp-discord-field-label">
+            <?php _e('Server Icon / Thumbnail', 'wp-discord-invite'); ?>
+            <a href="#" class="wp-discord-help-toggle" onclick="$j('#help-image').toggleClass('hidden'); return false;">
+              <span class="dashicons dashicons-editor-help"></span>
+            </a>
+          </label>
+          <div class="wp-discord-field-input">
+            <div class="wp-discord-media-upload">
+              <?php $image_url = get_option('smr_discord_image_url', plugin_dir_url(__FILE__) . './../assets/icon-128x128.png'); ?>
+              <div class="wp-discord-image-preview">
+                <img id="smr_discord_image_preview" src="<?php echo esc_url($image_url); ?>" alt="<?php esc_attr_e('Server icon preview', 'wp-discord-invite'); ?>">
+              </div>
+              <input type="hidden" id="smr_discord_image_url" name="smr_discord_image_url" value="<?php echo esc_url($image_url); ?>">
+              <div class="wp-discord-media-buttons">
+                <button type="button" class="button button-secondary" id="smr_discord_upload_image_button">
+                  <span class="dashicons dashicons-images-alt2"></span>
+                  <?php _e('Choose Image', 'wp-discord-invite'); ?>
+                </button>
+                <button type="button" class="button button-secondary" id="smr_discord_remove_image_button">
+                  <span class="dashicons dashicons-no"></span>
+                  <?php _e('Remove', 'wp-discord-invite'); ?>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div id="help-image" class="wp-discord-help-content hidden">
+            <p><?php _e('The image/thumbnail that appears on the right side of the embed card. Upload your server icon or logo from your WordPress media library.', 'wp-discord-invite'); ?></p>
+          </div>
+        </div>
+        
+        <script type="text/javascript">
+        jQuery(document).ready(function($) {
+          var mediaUploader;
+          
+          // Upload button click
+          $('#smr_discord_upload_image_button').on('click', function(e) {
+            e.preventDefault();
+            
+            // If the uploader object has already been created, reopen the dialog
+            if (mediaUploader) {
+              mediaUploader.open();
+              return;
+            }
+            
+            // Create the media uploader
+            mediaUploader = wp.media({
+              title: '<?php _e('Choose Server Icon', 'wp-discord-invite'); ?>',
+              button: {
+                text: '<?php _e('Use this image', 'wp-discord-invite'); ?>'
+              },
+              multiple: false,
+              library: {
+                type: 'image'
+              }
+            });
+            
+            // When an image is selected, run a callback
+            mediaUploader.on('select', function() {
+              var attachment = mediaUploader.state().get('selection').first().toJSON();
+              $('#smr_discord_image_url').val(attachment.url);
+              $('#smr_discord_image_preview').attr('src', attachment.url);
+            });
+            
+            // Open the uploader dialog
+            mediaUploader.open();
+          });
+          
+          // Remove button click
+          $('#smr_discord_remove_image_button').on('click', function(e) {
+            e.preventDefault();
+            var defaultImage = '<?php echo esc_js(plugin_dir_url(__FILE__) . './../assets/icon-128x128.png'); ?>';
+            $('#smr_discord_image_url').val(defaultImage);
+            $('#smr_discord_image_preview').attr('src', defaultImage);
+          });
+        });
+        </script>
 
+        <!-- Embed Color -->
+        <div class="wp-discord-field">
+          <label class="wp-discord-field-label">
+            <?php _e('Embed Accent Color', 'wp-discord-invite'); ?>
+            <a href="#" class="wp-discord-help-toggle" onclick="$j('#help-color').toggleClass('hidden'); return false;">
+              <span class="dashicons dashicons-editor-help"></span>
+            </a>
+          </label>
+          <div class="wp-discord-field-input">
+            <input type="text" name="smr_discord_embed_color" value="<?php echo esc_attr(get_option('smr_discord_embed_color', '#5865f2')); ?>" class="smr-discord-embed-color-picker">
+          </div>
+          <div id="help-color" class="wp-discord-help-content hidden">
+            <p><?php _e('The color of the vertical bar on the left side of the embed card. Choose a color that matches your brand.', 'wp-discord-invite'); ?></p>
+          </div>
+        </div>
+
+      </div>
+      <div class="wp-discord-card-footer">
+        <p class="description">
+          <span class="dashicons dashicons-info"></span>
+          <?php _e('Note: Discord caches embed previews for approximately 2 hours. Changes may not appear immediately.', 'wp-discord-invite'); ?>
+        </p>
+      </div>
+    </div>
+
+    <!-- Live Preview Card -->
+    <div class="wp-discord-card">
+      <div class="wp-discord-card-header">
+        <h2><span class="dashicons dashicons-visibility"></span><?php _e('Live Preview', 'wp-discord-invite'); ?></h2>
+      </div>
+      <div class="wp-discord-card-body">
+        <p class="description" style="margin-bottom: 15px;"><?php _e('Click "Save Changes" below to see your embed preview update.', 'wp-discord-invite'); ?></p>
+        
+        <div class="wp-discord-preview">
+          <div class="wp-discord-preview-label"><?php _e('HOW IT LOOKS IN DISCORD', 'wp-discord-invite'); ?></div>
+          <div class="embed-wrapper">
+            <div class="embed-color-pill" style="background-color:<?php echo esc_attr(get_option('smr_discord_embed_color', '#5865f2')); ?>"></div>
+            <div class="embed-rich">
+              <div class="embed-content" style="display: flex; align-items: flex-start;">
+                <div style="flex: 1;">
+                  <div class="_author">
+                    <span class="embed-author-name"><?php echo esc_html(get_option('smr_discord_author', 'You have been invited to a server!')); ?></span>
+                  </div>
+                  <div class="_title">
+                    <a class="embed-title"><?php echo esc_html(get_option('smr_discord_title', 'My Awesome Discord Server')); ?></a>
+                  </div>
+                  <div class="embed-description">
+                    <p><?php echo esc_html(get_option('smr_discord_description', 'My server is awesome coz of these')); ?></p>
+                  </div>
+                </div>
+                <img src="<?php echo esc_url(get_option('smr_discord_image_url', plugin_dir_url(__FILE__) . './../assets/icon-128x128.png')); ?>" class="embed-rich-thumb" style="max-width: 80px; max-height: 80px;" alt="<?php esc_attr_e('Server icon', 'wp-discord-invite'); ?>">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Button -->
     <p class="submit">
-    <input type="submit" class="button-primary" value="<?php _e(
-      "Save Changes"
-    ); ?>" />
+      <input type="submit" class="button-primary button-large" value="<?php esc_attr_e('Save Changes', 'wp-discord-invite'); ?>">
     </p>
+  </form>
 
-<?php wp_enqueue_style(
-  "CssForEmbed",
-  plugin_dir_url(__FILE__) . "./../assets/styles.css"
-); ?>
-
-<?php //EMBED PREVIEW START
-  ?>
-	<div><h2>Embed Preview</h2><p>(Click save changes for changes to get previewed)</p></div>
-	<div class="embed-wrapper mb-2" style="max-width:200px;margin-top:50px">
-	<div class="embed-color-pill" id="embedPreviewPlace" style="background-color:<?php echo get_option(
-   "smr_discord_embed_color",
-   "#f4f4f4"
- ); ?>"></div>
-	<div class="embed embed-rich bg-none" style="background-color:#2C2F33;border-color:#16171a">
-	<div class="embed-content" style="padding:5px;">
-	<div class="embed-content-inner">
-	<div class="_author">
-	<a class="embed-author-name"><span style="color:white;font-size:0.8em"><span id="embedSayingPlace"><?php echo get_option(
-   "smr_discord_author",
-   "You have been invited to a server!"
- ); ?></span></span></a>
-	</div>
-	<div class="_title"><a class="embed-title"><span id="embedTitlePlace"></span><?php echo get_option(
-   "smr_discord_title",
-   "My Awesome Discord Server"
- ); ?></a></div>
-	<div class="embed-description" style="color:#797a7a;width:300px;"><p><span id="embedInvitedByPlace" style="overflow-wrap: break-word;"><?php echo get_option(
-   "smr_discord_description",
-   "My server is awesome coz of these"
- ); ?></span></p>
-	</div>
-	</div>
-	<img id="embedImage" src="<?php echo get_option(
-   "smr_discord_image_url",
-   "https://i.imgur.com/LzO5Aw5.png"
- ); ?>" role="presentation" class="embed-rich-thumb" style="max-width: 80px; max-height: 80px;">
-	</div>
-	</div>
-	</div>
-<?php //EMBED PREVIEW END
-  ?>
-
-</form>
-
-<div><p>If you enjoy using this plugin please leave a review <a href="https://wordpress.org/support/plugin/wp-discord-invite/reviews/">here</a>. That would motivate me a lot.</p></div>
-<div><p>Created with <span class="dashicons dashicons-heart"></span> by <a href="https://sarveshmrao.in">Sarvesh M Rao</a>.</p></div>
-
+  <!-- Footer -->
+  <div class="wp-discord-footer">
+    <p><?php _e('If you enjoy using this plugin, please', 'wp-discord-invite'); ?> <a href="https://wordpress.org/support/plugin/wp-discord-invite/reviews/" target="_blank"><?php _e('leave a review', 'wp-discord-invite'); ?></a>. <?php _e('That would motivate me a lot!', 'wp-discord-invite'); ?></p>
+    <p><?php _e('Created with', 'wp-discord-invite'); ?> <span class="dashicons dashicons-heart"></span> <?php _e('by', 'wp-discord-invite'); ?> <a href="https://sarveshmrao.in" target="_blank">Sarvesh M Rao</a></p>
+  </div>
 </div>
 <?php
 }

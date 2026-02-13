@@ -12,9 +12,15 @@
 if (!defined("ABSPATH")) {
   exit();
 }
+
 // create custom plugin settings menu
 add_action("admin_menu", "smr_discord_create_menu");
 
+/**
+ * Create plugin admin menu and submenus
+ * 
+ * @return void
+ */
 function smr_discord_create_menu()
 {
   //create new top-level menu

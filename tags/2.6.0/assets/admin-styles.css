@@ -1,0 +1,507 @@
+/**
+ * WP Discord Invite - Modern Admin Styles
+ * Version: 2.6.0
+ */
+
+/* Main Container */
+.wp-discord-wrap {
+    max-width: 1200px;
+    margin: 20px 0;
+}
+
+.wp-discord-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #fff;
+    border-left: 4px solid #5865f2;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.wp-discord-header img {
+    width: 64px;
+    height: 64px;
+    margin-right: 20px;
+}
+
+.wp-discord-header-content h1 {
+    margin: 0 0 5px 0;
+    font-size: 24px;
+}
+
+.wp-discord-header-content p {
+    margin: 0;
+    color: #646970;
+}
+
+/* Card Styles */
+.wp-discord-card {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+.wp-discord-card-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #c3c4c7;
+    background: #f6f7f7;
+}
+
+.wp-discord-card-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.wp-discord-card-header h2 .dashicons {
+    margin-right: 8px;
+    color: #5865f2;
+}
+
+.wp-discord-card-body {
+    padding: 20px;
+}
+
+.wp-discord-card-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #c3c4c7;
+    background: #f6f7f7;
+}
+
+/* Form Fields */
+.wp-discord-field {
+    margin-bottom: 20px;
+}
+
+.wp-discord-field:last-child {
+    margin-bottom: 0;
+}
+
+.wp-discord-field-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #1d2327;
+}
+
+.wp-discord-field-label .required {
+    color: #d63638;
+}
+
+.wp-discord-field-input {
+    position: relative;
+}
+
+.wp-discord-field-input input[type="text"],
+.wp-discord-field-input input[type="url"] {
+    width: 100%;
+    max-width: 500px;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.wp-discord-field-input .input-prefix {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #f6f7f7;
+    border: 1px solid #8c8f94;
+    border-right: none;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.wp-discord-field-input .input-prefix + input {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    max-width: 400px;
+}
+
+/* Media Upload Styles */
+.wp-discord-media-upload {
+    display: block;
+}
+
+.wp-discord-image-preview {
+    margin-bottom: 15px;
+}
+
+.wp-discord-image-preview img {
+    max-width: 100px;
+    max-height: 100px;
+    display: block;
+    border: 2px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 5px;
+    background: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.wp-discord-image-preview img:hover {
+    border-color: #5865f2;
+}
+
+.wp-discord-media-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.wp-discord-media-buttons .button {
+    margin: 0;
+}
+
+.wp-discord-media-buttons .button .dashicons {
+    margin-top: 3px;
+    vertical-align: middle;
+}
+
+.wp-discord-field-description {
+    margin-top: 8px;
+    color: #646970;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.wp-discord-field-description .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+}
+
+/* Help Toggle */
+.wp-discord-help-toggle {
+    display: inline-block;
+    margin-left: 8px;
+    cursor: pointer;
+    color: #2271b1;
+    text-decoration: none;
+}
+
+.wp-discord-help-toggle:hover {
+    color: #135e96;
+}
+
+.wp-discord-help-content {
+    margin-top: 12px;
+    padding: 12px;
+    background: #f0f6fc;
+    border-left: 4px solid #2271b1;
+    border-radius: 2px;
+}
+
+.wp-discord-help-content.hidden {
+    display: none;
+}
+
+/* Stats Grid */
+.wp-discord-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.wp-discord-stat-box {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+}
+
+.wp-discord-stat-label {
+    display: block;
+    color: #646970;
+    font-size: 13px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wp-discord-stat-value {
+    display: block;
+    font-size: 32px;
+    font-weight: 600;
+    color: #1d2327;
+    line-height: 1.2;
+}
+
+.wp-discord-stat-meta {
+    margin-top: 8px;
+    color: #646970;
+    font-size: 12px;
+}
+
+/* Preview Box */
+.wp-discord-preview {
+    background: #36393f;
+    padding: 20px;
+    border-radius: 4px;
+    max-width: 450px;
+}
+
+.wp-discord-preview-label {
+    color: #b9bbbe;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+.embed-wrapper {
+    position: relative;
+}
+
+.embed-color-pill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 3px 0 0 3px;
+}
+
+.embed-rich {
+    padding-left: 12px;
+    background-color: #2f3136;
+    border-radius: 4px;
+    border-left: 4px solid #202225;
+    max-width: 520px;
+}
+
+.embed-content {
+    padding: 12px 16px;
+}
+
+._author {
+    margin-bottom: 4px;
+}
+
+.embed-author-name {
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+._title {
+    margin-bottom: 4px;
+}
+
+.embed-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #00b0f4;
+    text-decoration: none;
+}
+
+.embed-description {
+    font-size: 14px;
+    color: #dcddde;
+    line-height: 1.4;
+    margin-top: 4px;
+}
+
+.embed-rich-thumb {
+    border-radius: 4px;
+    margin-left: 16px;
+    flex-shrink: 0;
+}
+
+/* Buttons */
+.wp-discord-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: #5865f2;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.wp-discord-button:hover,
+.wp-discord-button:focus {
+    background: #4752c4;
+    color: #fff;
+}
+
+.wp-discord-button .dashicons {
+    margin-right: 6px;
+}
+
+.wp-discord-button-danger {
+    background: #ed4245;
+}
+
+.wp-discord-button-danger:hover {
+    background: #c33537;
+}
+
+.wp-discord-button-secondary {
+    background: #4f545c;
+}
+
+.wp-discord-button-secondary:hover {
+    background: #3f4248;
+}
+
+/* Discord OAuth Button */
+.dsc-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: #5865f2;
+    color: #fff !important;
+    border-radius: 3px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.dsc-btn:hover {
+    background: #4752c4;
+    color: #fff !important;
+}
+
+.dsc-btn-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDUgMjQwIj48cGF0aCBkPSJNMTA0LjQgMTAzLjljLTUuNyAwLTEwLjIgNS0xMC4yIDExLjFzNC42IDExLjEgMTAuMiAxMS4xYzUuNyAwIDEwLjItNSAxMC4yLTExLjEuMS02LjEtNC41LTExLjEtMTAuMi0xMS4xek0xNDAuOSAxMDMuOWMtNS43IDAtMTAuMiA1LTEwLjIgMTEuMXM0LjYgMTEuMSAxMC4yIDExLjFjNS43IDAgMTAuMi01IDEwLjItMTEuMXMtNC41LTExLjEtMTAuMi0xMS4xeiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0xODkuNSAyMGgtMTM0QzQ0LjIgMjAgMzUgMjkuMiAzNSA0MC42djEzNS4yYzAgMTEuNCA5LjIgMjAuNiAyMC41IDIwLjZoMTEzLjRsLTUuMy0xOC41IDEyLjggMTEuOSAxMi4xIDExLjIgMjEuNSAxOVY0MC42YzAtMTEuNC05LjItMjAuNi0yMC41LTIwLjZ6bS0zOC42IDEzMC42cy0zLjYtNC4zLTYuNi04LjFjMTMuMS0zLjcgMTguMS0xMS45IDE4LjEtMTEuOS00LjEgMi43LTggNC42LTExLjUgNS45LTUgMi4xLTkuOCAzLjUtMTQuNSA0LjMtOS42IDEuOC0xOC40IDEuMy0yNS45LS4xLTUuNy0xLjEtMTAuNi0yLjctMTQuNy00LjMtMi4zLS45LTQuOC0yLTcuMy0zLjQtLjMtLjItLjYtLjMtLjktLjUtLjItLjEtLjMtLjItLjQtLjMtMS44LTEtMi44LTEuNy0yLjgtMS43czQuOCA4IDE3LjUgMTEuOGMtMyAzLjgtNi43IDguMy02LjcgOC4zLTIyLjEtLjctMzAuNS0xNS4yLTMwLjUtMTUuMiAwLTMyLjIgMTQuNC01OC4zIDE0LjQtNTguMyAxNC40LTEwLjggMjguMS0xMC41IDI4LjEtMTAuNWwxIDEuMmMtMTggNS4yLTI2LjMgMTMuMS0yNi4zIDEzLjFzMi4yLTEuMiA1LjktMi45YzEwLjctNC43IDE5LjItNiAyMi43LTYuMy42LS4xIDEuMS0uMiAxLjctLjIgNi4xLS44IDEzLTEgMjAuMi0uMiA5LjUgMS4xIDE5LjcgMy45IDMwLjEgOS42IDAgMC03LjktNy41LTI0LjktMTIuN2wxLjQtMS42czEzLjctLjMgMjguMSAxMC41YzAgMCAxNC40IDI2LjEgMTQuNCA1OC4zIDAgMC04LjUgMTQuNS0zMC42IDE1LjJ6IiBmaWxsPSIjZmZmIi8+PC9zdmc+');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Footer */
+.wp-discord-footer {
+    margin-top: 30px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    text-align: center;
+}
+
+.wp-discord-footer .dashicons-heart {
+    color: #d63638;
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+    .wp-discord-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .wp-discord-header img {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .wp-discord-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .wp-discord-field-input input[type="text"],
+    .wp-discord-field-input input[type="url"] {
+        max-width: 100%;
+    }
+}
+
+/* Toggle Switch Styles */
+.wp-discord-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+.wp-discord-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.wp-discord-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #c3c4c7;
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.wp-discord-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.wp-discord-toggle input:checked + .wp-discord-toggle-slider {
+    background-color: #5865f2;
+}
+
+.wp-discord-toggle input:focus + .wp-discord-toggle-slider {
+    box-shadow: 0 0 1px #5865f2;
+}
+
+.wp-discord-toggle input:checked + .wp-discord-toggle-slider:before {
+    transform: translateX(26px);
+}
+
+/* OAuth Section Styles */
+.wp-discord-oauth-section {
+    padding: 20px;
+    background: #f6f7f7;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.wp-discord-oauth-divider {
+    margin: 15px 0;
+    position: relative;
+    text-align: center;
+}
+
+.wp-discord-oauth-divider:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #c3c4c7;
+}
+
+.wp-discord-oauth-divider span {
+    position: relative;
+    background: #f6f7f7;
+    padding: 0 15px;
+    color: #646970;
+    font-weight: 600;
+    font-size: 12px;
+}

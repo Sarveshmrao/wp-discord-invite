@@ -13,6 +13,13 @@ if (!defined("ABSPATH")) {
   exit();
 }
 
+/**
+ * Calculate time elapsed since a given datetime
+ * 
+ * @param string $datetime The datetime string to calculate from
+ * @param bool $full Whether to return full elapsed time or just the largest unit
+ * @return string Human-readable time elapsed string
+ */
 function time_elapsed_string($datetime, $full = false)
 {
   if ($datetime == "Never") {
@@ -22,8 +29,9 @@ function time_elapsed_string($datetime, $full = false)
   $ago = new DateTime($datetime);
   $diff = $now->diff($ago);
 
-  $diff->w = floor($diff->d / 7);
-  $diff->d -= $diff->w * 7;
+  // Calculate weeks from days
+  $weeks = floor($diff->d / 7);
+  $days = $diff->d - ($weeks * 7);
 
   $string = [
     "y" => "year",
@@ -34,9 +42,21 @@ function time_elapsed_string($datetime, $full = false)
     "i" => "minute",
     "s" => "second",
   ];
+  
+  // Build time string with actual values
+  $time_values = [
+    "y" => $diff->y,
+    "m" => $diff->m,
+    "w" => $weeks,
+    "d" => $days,
+    "h" => $diff->h,
+    "i" => $diff->i,
+    "s" => $diff->s,
+  ];
+  
   foreach ($string as $k => &$v) {
-    if ($diff->$k) {
-      $v = $diff->$k . " " . $v . ($diff->$k > 1 ? "s" : "");
+    if ($time_values[$k]) {
+      $v = $time_values[$k] . " " . $v . ($time_values[$k] > 1 ? "s" : "");
     } else {
       unset($string[$k]);
     }
