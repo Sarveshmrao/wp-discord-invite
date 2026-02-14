@@ -168,6 +168,10 @@ The plugin uses standard 302 HTTP redirects to Discord. For advanced customizati
 
 When enabled, the plugin sends a notification to your Discord channel every time someone clicks your invite link. You can see real-time engagement!
 
+= Where do I report security bugs found in this plugin? =
+
+Please report security bugs found in the source code of the WP Discord Invite plugin through the [Patchstack Vulnerability Disclosure  Program](https://patchstack.com/database/vdp/bc47e095-ed82-468d-a34f-80f1a3929091). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+
 == Screenshots ==
 
 1. Modern settings page with card-based UI and live embed preview
